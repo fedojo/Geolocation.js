@@ -1,8 +1,7 @@
 var Geolocation = (function(){
 	var watchID = null,
-	_currentRouteArray = [];
-
-	console.log(_currentRouteArray);
+	_currentRouteArray = [],
+	_geo = navigator.geolocation;
 
 	function Geolocation() {}
 
@@ -21,74 +20,32 @@ var Geolocation = (function(){
 			'timestamp': p.timeStamp
 		};
 
-		console.log(_currentRouteArray);
 		_currentRouteArray.push(curObj);
-		console.log(_currentRouteArray);
+		// console.log(_currentRouteArray);
 
 		return curObj;
 	}
 
-
-	var GMap = {
-		drawMap: function(settings) {
-			if (settings) {
-				var 
-				$element = settings.$element ? settings.$element : document.getElementById('map'),
-				routeArray = settings.routeArray ? settings.routeArray : currentRouteArray;
-			} else {
-				var settings = {};
-
-				settings.$element = document.getElementById("map");
-				settings.routeArray = _currentRouteArray;
-			}
-
-			var
-			finalRouteArray = [],
-			centerPoint = this.getCenterPoint();
-			mapOptions = {
-				zoom: 14,
-				center: new google.maps.LatLng(centerPoint.latitude, centerPoint.longitude)
-			},
-			map = new google.maps.Map(settings.$element, mapOptions);
-
-			settings.routeArray.forEach(function(el) {
-				finalRouteArray.push(new google.maps.LatLng(el.latitude,el.longitude));
-
-				var myLatlng = new google.maps.LatLng(el.latitude,el.longitude);
-				var marker = new google.maps.Marker({
-				      position: myLatlng,
-				      map: map,
-				      title: 'Hello World!'
-				  });
-				// console.log(currentRouteArray);
-			});
-
-			var finalRoute = new google.maps.Polyline({
-				path: finalRouteArray,
-				geodesic: true,
-				strokeColor: '#FF0000',
-				strokeOpacity: 1.0,
-				strokeWeight: 2
-			});
-
-			finalRoute.setMap(map);
-		},
-		drawRoute: function() {},
-		drawPins: function() {}
+	function getPosition(position) {
+		console.log(position);
 	}
 
 	Geolocation.prototype = {
 		successHandler: null,
 
+		getCurrentPosition: function(tester) {
+			_geo.getCurrentPosition(getPosition);
+		},
+
 		startWatching: function(array) {
 			var options = { timeout: 30000 };
 
 			currentRouteArray = array;
-			watchID = navigator.geolocation.watchPosition( onSuccess, onError, options);
+			watchID = _geo.watchPosition( onSuccess, onError, options);
 		},
 
 		stopWatching: function() {
-			navigator.geolocation.clearWatch(watchID);
+			_geo.clearWatch(watchID);
 			// console.log(this.getCenterPoint());
 		},
 
@@ -156,11 +113,10 @@ var Geolocation = (function(){
 
 				var myLatlng = new google.maps.LatLng(el.latitude,el.longitude);
 				var marker = new google.maps.Marker({
-				      position: myLatlng,
-				      map: map,
-				      title: 'Hello World!'
-				  });
-				// console.log(currentRouteArray);
+					position: myLatlng,
+					map: map,
+					title: 'Hello World!'
+				});
 			});
 
 			var finalRoute = new google.maps.Polyline({
@@ -175,18 +131,9 @@ var Geolocation = (function(){
 		},
 
 		setRouteArray: function(cArray) {
-			console.log(typeof(cArray));
-
-			if (typeof(cArray) == "String") {
-				console.log("chuj");
-			}
-			cArray.replace('/g','[');
-
-			console.log(cArray);
-			// cArray.forEach(function(el) {
-			// 	// console.log("SetRouteArray");
-			// 	_currentRouteArray.push({'latitude': el[0], 'longitude': el[1]});
-			// });
+			cArray.forEach(function(el) {
+				_currentRouteArray.push({'latitude': el[0], 'longitude': el[1]});
+			});
 		},
 
 		getRouteArray: function() {
