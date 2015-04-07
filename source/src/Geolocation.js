@@ -46,7 +46,6 @@ var Geolocation = (function(){
 
 		stopWatching: function() {
 			_geo.clearWatch(watchID);
-			// console.log(this.getCenterPoint());
 		},
 
 		getCenterPoint: function() {
