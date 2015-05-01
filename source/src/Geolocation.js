@@ -28,6 +28,7 @@ var Geolocation = (function(){
 
 	function getPosition(position) {
 		console.log(position);
+		return position;
 	}
 
 	Geolocation.prototype = {
