@@ -1,0 +1,11 @@
+{
+  "name": "MultiGrid",
+  "_cacheHeaders": {
+    "Content-Type": "text/html; charset=utf-8"
+  },
+  "main": "index.css",
+  "_source": "https://github.com/fedojo/MultiGrid.css",
+  "_target": "*",
+  "_originalSource": "https://github.com/fedojo/MultiGrid.css",
+  "_direct": true
+}
