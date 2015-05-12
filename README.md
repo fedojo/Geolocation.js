@@ -49,5 +49,9 @@ source/traceroute.html - you can copy your array of gps positions then click but
 
 ### Changelog
 
+
+0.0.4 (1.5.2015)
+- ecmascript 6 porting (beta)
+
 0.0.4 (1.5.2015)
 - added source/traceroute.html to trace route on google maps from added array to textarea
